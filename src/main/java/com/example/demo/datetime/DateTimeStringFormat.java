@@ -7,6 +7,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -38,6 +39,13 @@ public class DateTimeStringFormat {
      * 字符串转换成日期时间（使用DateUtils）
      */
     public static Date string2DateTimeByDateUtils() throws ParseException {
+        String[] formArray = {"yyyy-MM-dd", BASE_PATTERN_STRING};
+        //DateUtils.parseDate()方法的parsePatterns参数可以传入多个值，其中至少有一个可以成功解析该字符串即可，否则报错。
+        DateUtils.parseDate(BASE_DATE_TIME, formArray);
+
+        //该方法和 DateUtils.parseDate() 方法作用相同，只不过它对于字符串的要求更严格。
+        DateUtils.parseDateStrictly(BASE_DATE_TIME, formArray);
+
         return DateUtils.parseDate(BASE_DATE_TIME, BASE_PATTERN_STRING);
     }
 
@@ -57,23 +65,29 @@ public class DateTimeStringFormat {
 
     /**
      * 日期时间转换成字符串（使用DateUtils）
-     *
-     * @return 字符串
+     * 该方法中包含DateFormatUtils.format()三个重载方法，且以下三个方法返回的结果相同
      */
     public static String dateTime2StringByDateUtils() throws ParseException {
+        //String DateFormatUtils.format(long millis, String pattern)
+        DateFormatUtils.format(string2DateTime().getTime(), BASE_PATTERN_STRING);
+
+        //String DateFormatUtils.format(Calendar calendar, String pattern)
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(string2DateTime());
+        DateFormatUtils.format(cal, BASE_PATTERN_STRING);
+
+        //String DateFormatUtils.format(Date date, String pattern)
         return DateFormatUtils.format(string2DateTime(), BASE_PATTERN_STRING);
     }
 
     /**
      * 日期时间转换成字符串（使用Java 8的LocalDateTime）
-     *
-     * @return 字符串
      */
     public static String dateTime2StringByJava8() {
         return string2DateTimeByJava8().format(DATE_TIME_FORMATTER);
     }
 
     public static void main(String[] args) throws ParseException {
-        System.out.println(dateTime2StringByJava8());
+        System.out.println(string2DateTimeByDateUtils());
     }
 }
