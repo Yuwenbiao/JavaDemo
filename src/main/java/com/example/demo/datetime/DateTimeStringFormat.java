@@ -5,6 +5,7 @@ import org.apache.commons.lang3.time.DateUtils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
@@ -24,7 +25,7 @@ public class DateTimeStringFormat {
     /**
      * java 8日期格式化工具
      */
-    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss");
+    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     /**
      * 字符串转换成日期时间
@@ -41,10 +42,10 @@ public class DateTimeStringFormat {
     }
 
     /**
-     * 字符串转换成日期时间（使用Java 8的API）
+     * 字符串转换成日期时间（使用Java 8的LocalDateTime）
      */
-    public static Date string2DateTimeByJava8() throws ParseException {
-        return DateUtils.parseDate(BASE_DATE_TIME, BASE_PATTERN_STRING);
+    public static LocalDateTime string2DateTimeByJava8() {
+        return LocalDateTime.parse(BASE_DATE_TIME, DATE_TIME_FORMATTER);
     }
 
     /**
@@ -63,7 +64,16 @@ public class DateTimeStringFormat {
         return DateFormatUtils.format(string2DateTime(), BASE_PATTERN_STRING);
     }
 
+    /**
+     * 日期时间转换成字符串（使用Java 8的LocalDateTime）
+     *
+     * @return 字符串
+     */
+    public static String dateTime2StringByJava8() {
+        return string2DateTimeByJava8().format(DATE_TIME_FORMATTER);
+    }
+
     public static void main(String[] args) throws ParseException {
-        System.out.println(string2DateTimeByDateUtils());
+        System.out.println(dateTime2StringByJava8());
     }
 }
