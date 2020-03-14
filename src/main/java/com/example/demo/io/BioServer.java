@@ -13,7 +13,7 @@ import java.util.concurrent.Executors;
  * @author yuwb@corp.21cn.com
  * @date 2019/12/18 10:14
  */
-public class OioServer {
+public class BioServer {
 
     @SuppressWarnings("resource")
     public static void main(String[] args) throws Exception {
