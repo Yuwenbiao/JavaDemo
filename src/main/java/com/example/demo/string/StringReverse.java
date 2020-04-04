@@ -57,7 +57,7 @@ public class StringReverse {
     }
 
     /**
-     * 算法5
+     * 算法5·
      */
     public static String reverse5(String orig) {
         char[] s = orig.toCharArray();
